@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>这是网页标题</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        body {
+            background-color: #1a1a1a;
+            color: #eee;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 16px;
+            line-height: 1.65;
+        }
+        .header-box {
+            background:#272727;
+            border-left:6px solid #39b54a;
+            padding:18px;
+            border-radius:8px;
+            margin-bottom:24px;
+        }
+        h1 {
+            font-size:24px;
+            color:#39b54a;
+            margin-bottom:6px;
+        }
+        .update-info{
+            font-size:13px;
+            color:#aaa;
+        }
+        .card{
+            background:#252525;
+            padding:20px;
+            border-radius:10px;
+            margin-bottom:20px;
+        }
+        h2{
+            color:#72e080;
+            font-size:19px;
+            margin-bottom:12px;
+        }
+        ul{
+            padding-left:22px;
+            margin:10px 0;
+        }
+        .note{
+            color:#ffb84d;
+        }
+        .template-block{
+            background:#1e1e1e;
+            border:1px solid #444;
+            padding:14px;
+            border-radius:6px;
+            margin:12px 0;
+            font-family:monospace;
+        }
+        .join-btn{
+            display:block;
+            text-align:center;
+            background:#39b54a;
+            color:#000;
+            text-decoration:none;
+            font-weight:bold;
+            padding:14px;
+            border-radius:8px;
+            margin-top:14px;
+            font-size:17px;
+        }
+        .join-btn:hover{
+            background:#4cd45e;
+        }
+        .footer{
+            margin-top:30px;
+            text-align:center;
+            font-size:13px;
+            color:#888;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-box">
+        <h1>也许是主体</h1>
+        <p>文字
+        </p>
+        <div class="update-info">灰色细体字</div>
+    </div>
+
+    <div class="card">
+        <h2>这是一个模板</h2>
+        <br>
+        <p><strong>这里是粗体字</strong></p>
+        <ul>
+            <li>一个带点的模板</li>
+            <li>同上</li>
+        </ul>
+        <p class="note">粗体字</p>
+        <p style="margin-top:8px;"> 这是一个细体字</p>
+    </div>
+
+    <div class="card">
+        <h2>这是一个带点的模板</h2>
+        <ul>
+            <li>文字
+            <li>文字</li>
+            <li>文字</li>
+            <li>文字</li>
+        </ul>
+        <p class="note">橙色字体</p>
+        
+    </div>
+
+    <div class="card">
+        <h2>粗体字</h2>
+        <p>细体字：<strong>粗体字</strong></p>
+        <a class="join-btn" href="跳转的链接">按钮名称</a>
+        <p>文字，文字</p>
+        <a href="download/文件.zip"
+        download class="join-btn">下载压缩包</a>
+
+    </div>
+ 
+ <div class="footer"> 
+        灰体字
+    </div>
+</body>
+</html>
