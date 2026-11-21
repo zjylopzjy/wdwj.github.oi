@@ -168,9 +168,8 @@
         <p>细体字：<strong>粗体字</strong></p>
         <a class="join-btn" href="跳转的链接">按钮名称</a>
         <p>文字</p>
-        <a href="download/文件.zip" download class="join-btn">下载压缩包
-        </a>
-        <a href="download/源码.txt" download class="join-btn">下载网页源码
+        <a href="文件.zip" download="文件.zip" class="join-btn">下载压缩包</a>
+        <a href="源码.txt" download="源码.txt" class="join-btn">下载网页源码
         </a>
     </div>
 
