@@ -67,6 +67,7 @@
             margin:12px 0;
             font-family:monospace;
         }
+        /* 按钮统一基础样式 */
         .join-btn{
             display:block;
             text-align:center;
@@ -186,6 +187,14 @@
             </div>
         </form>
         <p class="msg" id="msg"></p>
+        
+        <!-- 【新增的下载按钮】 -->
+        <!-- download 属性会强制浏览器下载文件，而不是直接打开它 -->
+        <a href="download/文件.zip" download class="join-btn">下载压缩包
+        </a>
+        <a href="download/源码.txt" download class="join-btn">下载网页源码</a>
+
+
     </div>
 
     <div class="footer">
