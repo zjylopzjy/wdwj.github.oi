@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -37,15 +36,21 @@
             color:#aaa;
         }
         .card{
-            background:#252525;
+            background: rgba(37,37,37,0.85);
             padding:20px;
             border-radius:10px;
             margin-bottom:20px;
+            transition: 0.2s ease;
+        }
+        .card:hover{
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
         }
         h2{
             color:#72e080;
             font-size:19px;
             margin-bottom:12px;
+            text-shadow: 0 0 8px #72e08060;
         }
         ul{
             padding-left:22px;
@@ -73,10 +78,53 @@
             border-radius:8px;
             margin-top:14px;
             font-size:17px;
+            border:none;
+            cursor:pointer;
+            width:100%;
+            transition: 0.15s ease;
         }
         .join-btn:hover{
             background:#4cd45e;
+            transform: scale(1.02);
+            box-shadow: 0 0 12px #39b54a;
         }
+        .join-btn:active{
+            transform: scale(0.97);
+        }
+        .join-btn:disabled{
+            opacity:0.6;
+            cursor:not-allowed;
+            transform:none;
+            box-shadow:none;
+        }
+        .input-row{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+            margin-top:12px;
+        }
+        .input-row input{
+            width:100%;
+            padding:12px;
+            border-radius:8px;
+            border:1px solid #444;
+            background:#1e1e1e;
+            color:#eee;
+            font-size:16px;
+            outline:none;
+            transition:0.15s ease;
+        }
+        .input-row input:focus{
+            border-color:#39b54a;
+            box-shadow:0 0 8px #39b54a60;
+        }
+        .msg{
+            font-size:14px;
+            margin-top:8px;
+            min-height:20px;
+        }
+        .msg.success{ color:#72e080; }
+        .msg.error{ color:#ff6b6b; }
         .footer{
             margin-top:30px;
             text-align:center;
@@ -88,47 +136,120 @@
 <body>
     <div class="header-box">
         <h1>也许是主体</h1>
-        <p>文字
-        </p>
+        <p>文字</p>
         <div class="update-info">灰色细体字</div>
     </div>
 
     <div class="card">
         <h2>这是一个模板</h2>
-        <br>
         <p><strong>这里是粗体字</strong></p>
         <ul>
             <li>一个带点的模板</li>
             <li>同上</li>
         </ul>
         <p class="note">粗体字</p>
-        <p style="margin-top:8px;"> 这是一个细体字</p>
+        <p style="margin-top:8px;">这是一个细体字</p>
     </div>
 
     <div class="card">
         <h2>这是一个带点的模板</h2>
         <ul>
-            <li>文字
+            <li>文字</li>
             <li>文字</li>
             <li>文字</li>
             <li>文字</li>
         </ul>
         <p class="note">橙色字体</p>
-        
     </div>
 
     <div class="card">
         <h2>粗体字</h2>
         <p>细体字：<strong>粗体字</strong></p>
         <a class="join-btn" href="跳转的链接">按钮名称</a>
-        <p>文字，文字</p>
-        <a href="文件.zip"
-        download class="join-btn">下载压缩包</a>
-
+        <p>文字</p>
     </div>
- 
- <div class="footer"> 
+
+    <!-- 填写并提交到 Web3Forms 的卡片 -->
+    <div class="card">
+        <h2>填写信息</h2>
+        <p>填写后点击提交，内容会发送到服务器。</p>
+
+        <form id="submitForm">
+            <!-- 已经填入了你的专属 Key -->
+            <input type="hidden" name="access_key" value="217a5708-778b-4874-bd66-e5da022e3e82">
+
+            <div class="input-row">
+                <!-- name="content" 决定了你收到邮件时的字段标题 -->
+                <input type="text" name="content" id="myInput"
+                       placeholder="请输入内容" maxlength="200" required>
+                <button type="submit" class="join-btn" id="submitBtn">提交</button>
+            </div>
+        </form>
+        <p class="msg" id="msg"></p>
+    </div>
+
+    <div class="footer">
         灰体字
     </div>
+
+    <script>
+        // 滚动出现动画
+        const observer = new IntersectionObserver(items => {
+            items.forEach(i => {
+                if (i.isIntersecting) i.target.classList.add("show");
+            });
+        });
+        document.querySelectorAll(".card").forEach(c => observer.observe(c));
+
+        // Web3Forms 异步提交逻辑
+        const form = document.getElementById("submitForm");
+        const input = document.getElementById("myInput");
+        const btn = document.getElementById("submitBtn");
+        const msg = document.getElementById("msg");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault(); // 阻止页面跳转
+
+            const value = input.value.trim();
+            if (!value) {
+                msg.textContent = "请先填写内容";
+                msg.className = "msg error";
+                return;
+            }
+
+            // 按钮变成提交中状态
+            btn.disabled = true;
+            btn.textContent = "提交中...";
+            msg.textContent = "";
+            msg.className = "msg";
+
+            try {
+                const formData = new FormData(form);
+                const res = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                // 判断是否成功
+                if (res.ok && data.success) {
+                    msg.textContent = "提交成功，感谢填写！";
+                    msg.className = "msg success";
+                    input.value = ""; // 清空输入框
+                } else {
+                    msg.textContent = "提交失败：" + (data.message || res.status);
+                    msg.className = "msg error";
+                }
+            } catch (err) {
+                msg.textContent = "网络错误，请稍后再试";
+                msg.className = "msg error";
+            } finally {
+                // 恢复按钮状态
+                btn.disabled = false;
+                btn.textContent = "提交";
+            }
+        });
+    </script>
 </body>
 </html>
